@@ -20,7 +20,8 @@ namespace raimbow
         private int max_list_table = 1;
         private double tt = 2.12;
 
-        private int Col_factor { 
+        private int Col_factor
+        {
             get
             {
                 return col_factor;
@@ -276,26 +277,7 @@ namespace raimbow
             col_factor = (int)numericUpDown1.Value;
             int[] mass_max = max_text_read();
             int[] mass_min = min_text_read();
-
-            if (list_table < max_list_table)
-            {
-                dict[list_table].col_factory = col_factor;
-                dict[list_table].y_max = y_max;
-                dict[list_table].y_min = y_min;
-                dict[list_table].max_var = mass_max;
-                dict[list_table].min_var = mass_min;
-                dict[list_table].tT = tt;
-
-                list_table = list_table + 1;
-
-                Col_factor = dict[list_table].col_factory;
-                Y_minimum = dict[list_table].y_min;
-                Y_maximum = dict[list_table].y_max;
-                TT = dict[list_table].tT;
-                max_text_write(dict[list_table].max_var);
-                min_text_write(dict[list_table].min_var);
-            }
-            else
+            if (!dict.ContainsKey(list_table))
             {
                 Save_date save = new Save_date();
                 save.col_factory = col_factor;
@@ -315,10 +297,51 @@ namespace raimbow
                 max_text_write(dict[list_table].max_var);
                 min_text_write(dict[list_table].min_var);
 
+                max_list_table = max_list_table + 1;
                 list_table = list_table + 1;
             }
+            else
+            {
+                dict[list_table].col_factory = col_factor;
+                dict[list_table].y_max = y_max;
+                dict[list_table].y_min = y_min;
+                dict[list_table].max_var = mass_max;
+                dict[list_table].min_var = mass_min;
+                dict[list_table].tT = tt;
 
-            max_list_table = max_list_table + 1;
+                list_table = list_table + 1;
+                if (dict.ContainsKey(list_table))
+                {
+                    Col_factor = dict[list_table].col_factory;
+                    Y_minimum = dict[list_table].y_min;
+                    Y_maximum = dict[list_table].y_max;
+                    TT = dict[list_table].tT;
+                    max_text_write(dict[list_table].max_var);
+                    min_text_write(dict[list_table].min_var);
+                }
+                else
+                {
+                    Save_date save = new Save_date();
+                    save.col_factory = col_factor;
+                    save.y_max = y_max;
+                    save.y_min = y_min;
+                    save.max_var = mass_max;
+                    save.min_var = mass_min;
+                    save.tT = tt;
+
+                    dict.Add(list_table, save);
+
+                    save = null;
+                    Col_factor = dict[list_table].col_factory;
+                    Y_minimum = dict[list_table].y_min;
+                    Y_maximum = dict[list_table].y_max;
+                    TT = dict[list_table].tT;
+                    max_text_write(dict[list_table].max_var);
+                    min_text_write(dict[list_table].min_var);
+
+                    max_list_table = max_list_table + 1;
+                }
+            }
 
             numberstr.Text = "Страница " + list_table;
 
@@ -351,7 +374,7 @@ namespace raimbow
             int[] mass_max = max_text_read();
             int[] mass_min = min_text_read();
 
-            if (list_table == max_list_table)
+            if (!dict.ContainsKey(list_table))
             {
                 Save_date save = new Save_date();
                 save.col_factory = col_factor;
@@ -449,6 +472,43 @@ namespace raimbow
                         save.min_var = mass_min;
                         save.tT = tt;
                         dict.Add(col_variant, save);
+                    }
+
+                    if (col_variant == dict.Count())
+                    {
+                        if (dict.ContainsKey(col_variant))
+                        {
+                            y_min = Convert.ToInt32(textBoxMinimum.Text);
+                            y_max = Convert.ToInt32(textBoxMaximum.Text);
+                            tt = Convert.ToDouble(textBox1.Text.Replace(".", ","));
+                            col_factor = (int)numericUpDown1.Value;
+                            int[] mass_max = max_text_read();
+                            int[] mass_min = min_text_read();
+
+                            dict[list_table].col_factory = col_factor;
+                            dict[list_table].y_max = y_max;
+                            dict[list_table].y_min = y_min;
+                            dict[list_table].max_var = mass_max;
+                            dict[list_table].min_var = mass_min;
+                            dict[list_table].tT = tt;
+                        }
+                        else
+                        {
+                            y_min = Convert.ToInt32(textBoxMinimum.Text);
+                            y_max = Convert.ToInt32(textBoxMaximum.Text);
+                            tt = Convert.ToDouble(textBox1.Text.Replace(".", ","));
+                            col_factor = (int)numericUpDown1.Value;
+                            int[] mass_max = max_text_read();
+                            int[] mass_min = min_text_read();
+                            Save_date save = new Save_date();
+                            save.col_factory = col_factor;
+                            save.y_max = y_max;
+                            save.y_min = y_min;
+                            save.max_var = mass_max;
+                            save.min_var = mass_min;
+                            save.tT = tt;
+                            dict.Add(col_variant, save);
+                        }
                     }
                 }
             }
