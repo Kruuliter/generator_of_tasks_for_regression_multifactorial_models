@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace raimbow
 {
@@ -21,6 +22,7 @@ namespace raimbow
             InitializeComponent();
             dictors = new Dictionary<int, Save_date>(1);
             col_variant = (int)numericUpDown2.Value;
+            FormatItem.Text = tXTToolStripMenuItem.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -55,25 +57,9 @@ namespace raimbow
                     }
                     dirInfo.CreateSubdirectory(subpath1);
                     dirInfo.CreateSubdirectory(subpath2);
-                    string[] who_is_tables = new string[2] { textBox1.Text + "\\ПФЭ для преподавателя", textBox1.Text + "\\ПФЭ для студентов" };
-                    string vid = FormatItem.Text;
+                    string[] who_is_tables = new string[2] { textBox1.Text + "\\" + subpath1, textBox1.Text + "\\" + subpath2 };
                     MessageBox.Show("Подождите некоторое время,\nгенерация решений требует времени", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    switch (vid)
-                    {
-                        case "XLSX":
-                            {
-                                ReadExcelFormuls readExcelFormuls = new ReadExcelFormuls();
-                                MessageBox.Show(readExcelFormuls.reading(who_is_tables, dictors), "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            break;
-                        case "TXT":
-                            {
-                                WriteTXT writeTXT = new WriteTXT();
-                                MessageBox.Show(writeTXT.reading(who_is_tables, dictors), "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            break;
-
-                    }
+                    new Form3(who_is_tables, this.dictors, FormatItem.Text);
                 }
             }
         }

@@ -182,8 +182,7 @@
             this.xLSXToolStripMenuItem1,
             this.tXTToolStripMenuItem});
             this.FormatItem.Name = "FormatItem";
-            this.FormatItem.Size = new System.Drawing.Size(45, 20);
-            this.FormatItem.Text = "XLSX";
+            this.FormatItem.Size = new System.Drawing.Size(12, 20);
             // 
             // xLSXToolStripMenuItem1
             // 

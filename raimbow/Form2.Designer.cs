@@ -179,7 +179,7 @@
             this.min_max_value_table.ColumnCount = 3;
             this.min_max_value_table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.12081F));
             this.min_max_value_table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 81.8792F));
-            this.min_max_value_table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.min_max_value_table.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
             this.min_max_value_table.Location = new System.Drawing.Point(84, 96);
             this.min_max_value_table.Name = "min_max_value_table";
             this.min_max_value_table.RowCount = 3;
